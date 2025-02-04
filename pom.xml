@@ -50,6 +50,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.6.4.Final</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
             <scope>runtime</scope>

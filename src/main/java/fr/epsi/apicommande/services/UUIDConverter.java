@@ -4,6 +4,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.UUID;
 
 @Converter
@@ -14,10 +15,18 @@ public class UUIDConverter implements AttributeConverter<UUID, byte[]> {
         if (uuid == null) {
             return null;
         }
+
+        System.out.println("Conversion UUID vers BINARY(16) : " + uuid);
+
         ByteBuffer buffer = ByteBuffer.wrap(new byte[16]);
         buffer.putLong(uuid.getMostSignificantBits());
         buffer.putLong(uuid.getLeastSignificantBits());
-        return buffer.array();
+
+        byte[] bytes = buffer.array();
+
+        System.out.println("Bytes stockés en BDD : " + Arrays.toString(bytes));
+
+        return bytes;
     }
 
     @Override
@@ -28,6 +37,9 @@ public class UUIDConverter implements AttributeConverter<UUID, byte[]> {
         ByteBuffer buffer = ByteBuffer.wrap(bytes);
         long mostSignificantBits = buffer.getLong();
         long leastSignificantBits = buffer.getLong();
-        return new UUID(mostSignificantBits, leastSignificantBits);
+        UUID uuid = new UUID(mostSignificantBits, leastSignificantBits);
+        System.out.println("Conversion BINARY(16) vers UUID : " + uuid);
+
+        return uuid;
     }
 }
